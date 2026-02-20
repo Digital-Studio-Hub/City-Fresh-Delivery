@@ -1,0 +1,285 @@
+BUSINESS OVERVIEW
+Build a premium, modern, high-conversion website for CityFresh, a fruit supply and delivery business based in Somerset West, Cape Town.
+
+Business Name: CityFresh
+Location: 25 Dirkie Uys Street, Somerset West, Cape Town
+Domain to Register: cityfresh.co.za
+Email: To be created (e.g., info@cityfresh.co.za)
+WhatsApp Number: 069 319 3534
+Business Type: Fruit Supply & Delivery
+
+CORE POSITIONING
+CityFresh must be positioned as:
+
+A reliable fruit delivery service
+
+A fresh produce supplier
+
+Suitable for households and businesses
+
+Quality-focused and consistent
+
+A convenient local solution
+
+The website must feel clean, fresh, and trustworthy — not like a basic grocery listing.
+
+PRIMARY OBJECTIVE
+The website must:
+
+Clearly present fruit supply and delivery services
+
+Highlight freshness and quality
+
+Drive WhatsApp orders and enquiries
+
+Support future e-commerce expansion
+
+Rank locally for Somerset West and Cape Town
+
+No pricing required initially unless provided later.
+Primary conversion method: WhatsApp ordering.
+
+TARGET MARKET
+Households
+
+Small retailers
+
+Restaurants
+
+Offices
+
+Catering companies
+
+Event planners
+
+WEBSITE STRUCTURE (SITEMAP)
+/
+├── Home
+├── About Us
+├── Our Produce
+├── Delivery Areas
+├── How It Works
+├── Contact Us
+├── Privacy Policy
+└── Terms & Conditions
+
+PAGE SPECIFICATIONS
+HOME PAGE
+Hero headline example:
+Fresh Fruit Delivered to Your Door in Somerset West
+
+Subheading:
+Quality produce, reliable service, and convenient delivery.
+
+Primary CTAs:
+
+Order on WhatsApp
+
+Contact Us
+
+View Our Produce
+
+Sections:
+
+Featured fruit categories
+
+Why choose CityFresh
+
+Delivery process
+
+Local freshness focus
+
+Strong CTA banner
+
+ABOUT US
+Include:
+
+Company overview
+
+Commitment to quality and freshness
+
+Local sourcing (if applicable)
+
+Focus on customer satisfaction
+
+Tone: Friendly, trustworthy, structured.
+
+OUR PRODUCE
+Organised categories such as:
+
+Seasonal Fruits
+
+Bulk Supply
+
+Household Packs
+
+Custom Orders
+
+Each section:
+
+Clean visuals
+
+Short descriptions
+
+CTA: Order Now on WhatsApp
+
+DELIVERY AREAS
+Focus on:
+
+Somerset West
+
+Cape Town
+
+Surrounding areas
+
+Optimise for:
+
+Fruit delivery Somerset West
+
+Fruit supplier Cape Town
+
+HOW IT WORKS
+Simple 3-step explanation:
+
+Contact via WhatsApp
+
+Confirm order
+
+Fresh delivery to your door
+
+Build clarity and simplicity.
+
+CONTACT PAGE
+Include:
+
+Contact form (Name, Phone, Message)
+
+WhatsApp floating button (069 319 3534)
+
+Email address
+
+Address display
+
+Map embed
+
+DESIGN & UI/UX DIRECTION
+Visual Style
+Clean
+
+Fresh
+
+Natural
+
+Bright but not loud
+
+Easy navigation
+
+Colour Palette (Recommended)
+Primary: Fresh green
+
+Secondary: White
+
+Accent: Citrus orange or soft yellow
+
+Clean typography and spacing
+
+Avoid clutter and heavy graphics.
+
+LEAD GENERATION FEATURES (MANDATORY)
+Floating WhatsApp button
+
+Click-to-call mobile option
+
+Clear order CTAs
+
+No pricing tables unless provided
+
+No pop-ups
+
+SEO (HIGH-GRADE LOCAL OPTIMISATION)
+Target keywords:
+
+Fruit delivery Somerset West
+
+Fresh fruit Cape Town
+
+Fruit supplier Somerset West
+
+Bulk fruit supply Cape Town
+
+Implement:
+
+Organization schema
+
+LocalBusiness schema
+
+Product schema (if listing fruits individually)
+
+Optimised metadata
+
+Sitemap.xml
+
+Robots.txt
+
+Image alt tags
+
+TECHNICAL REQUIREMENTS
+Mobile-first design
+
+Load speed under 1.5 seconds
+
+WebP image optimisation
+
+HTTPS secure
+
+CMS-based
+
+Scalable to add full e-commerce later
+
+Google Analytics ready
+
+FUTURE EXPANSION READY
+Structure must allow:
+
+Online checkout
+
+Subscription fruit boxes
+
+Bulk corporate ordering
+
+Payment gateway integration
+
+EXCLUSIONS
+No complex e-commerce unless activated
+
+No pop-ups
+
+No heavy animations
+
+No login systems
+
+FINAL DELIVERABLES
+Premium fruit delivery website
+
+WhatsApp order integration
+
+SEO-ready structure
+
+Domain registered and live
+
+Professional business email created
+
+Built for long-term brand growth
+
+SUCCESS STANDARD
+The website must:
+
+Instantly communicate freshness
+
+Feel trustworthy and local
+
+Convert visitors into WhatsApp orders
+
+Rank in Somerset West searches
+
+Support future scaling
