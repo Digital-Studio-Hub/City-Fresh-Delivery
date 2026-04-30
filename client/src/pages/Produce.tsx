@@ -25,6 +25,14 @@ import purplePlumImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.09_1777570
 import limeImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.11_1777570430144.jpeg";
 import peppersImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.12_(1)_1777570430144.jpeg";
 import pineappleImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.12_1777570430145.jpeg";
+import pumpkinImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.13_1777570474366.jpeg";
+import onionImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.14_(1)_1777570474367.jpeg";
+import tomatoImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.14_(2)_1777570474367.jpeg";
+import butternutImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.14_1777570474367.jpeg";
+import carrotImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.15_(2)_1777570474368.jpeg";
+import lettuceImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.15_1777570474368.jpeg";
+import cucumberImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.16_1777570474369.jpeg";
+import potatoImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.15_(1)_1777570574541.png";
 
 const WHATSAPP_URL = "https://wa.me/27693193534?text=Hi%20CityFresh%2C%20I%27d%20like%20to%20order%20some%20fresh%20produce!";
 
@@ -73,12 +81,20 @@ const produceCategories = [
     title: "Fresh Vegetables",
     desc: "Farm-fresh vegetables delivered alongside your fruit order — quality produce for every meal.",
     items: [
+      { img: tomatoImg, name: "Tomatoes", desc: "Plump, ripe tomatoes for salads, sauces and sandwiches" },
+      { img: onionImg, name: "Onions", desc: "Firm, flavourful brown onions — a kitchen essential" },
+      { img: potatoImg, name: "Potatoes", desc: "Hearty, versatile potatoes perfect for any meal" },
+      { img: carrotImg, name: "Carrots", desc: "Sweet, crunchy carrots fresh from the farm" },
+      { img: lettuceImg, name: "Iceberg Lettuce", desc: "Crisp, refreshing lettuce ideal for salads and wraps" },
+      { img: cucumberImg, name: "Cucumbers", desc: "Cool, crunchy cucumbers — great for salads and snacks" },
       { img: avocadoImg, name: "Avocados", desc: "Creamy, ripe avocados perfect for salads and toast" },
       { img: peppersImg, name: "Bell Peppers", desc: "Crisp, colourful peppers in red, yellow, green and orange" },
       { img: redChilliImg, name: "Red Chillies", desc: "Hot, fiery red chillies to spice up any dish" },
       { img: greenChilliImg, name: "Green Chillies", desc: "Fresh green chillies with a bright, sharp heat" },
       { img: cabbageImg, name: "Cabbage", desc: "Crunchy, fresh cabbage heads — great for slaws and stews" },
       { img: beetrootImg, name: "Beetroot", desc: "Earthy, vibrant beetroot with leafy tops" },
+      { img: butternutImg, name: "Butternut", desc: "Sweet, nutty butternut squash perfect for soups and roasts" },
+      { img: pumpkinImg, name: "Pumpkin", desc: "Rich, golden pumpkin ideal for hearty South African dishes" },
       { img: sweetPotatoImg, name: "Sweet Potatoes", desc: "Sweet, hearty potatoes ideal for roasting and baking" },
       { img: okraImg, name: "Okra", desc: "Tender, fresh okra perfect for curries and stir-fries" },
     ]
