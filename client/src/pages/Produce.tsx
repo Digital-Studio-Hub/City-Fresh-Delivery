@@ -7,8 +7,26 @@ import bananaImg from "@assets/WhatsApp_Image_2026-02-18_at_16.46.59_(2)_1771579
 import banana2Img from "@assets/WhatsApp_Image_2026-02-18_at_16.47.00_1771579161426.jpeg";
 import apricotImg from "@assets/WhatsApp_Image_2026-02-18_at_16.47.01_1771579161426.jpeg";
 import fruitBoxImg from "@assets/WhatsApp_Image_2026-02-18_at_16.46.57_1771579161423.jpeg";
+import cabbageImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.02_1777570430138.jpeg";
+import pearImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.03_(1)_1777570430139.jpeg";
+import lemonImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.03_1777570430139.jpeg";
+import avocadoImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.04_(1)_1777570430139.jpeg";
+import redChilliImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.04_1777570430140.jpeg";
+import greenChilliImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.05_(1)_1777570430140.jpeg";
+import okraImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.05_(2)_1777570430140.jpeg";
+import sweetPotatoImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.06_(1)_1777570430141.jpeg";
+import naartjieImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.06_(2)_1777570430141.jpeg";
+import beetrootImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.06_1777570430141.jpeg";
+import guavaImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.07_(1)_1777570430142.jpeg";
+import orangesImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.07_1777570430142.jpeg";
+import watermelonImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.08_(1)_1777570430143.jpeg";
+import mangoImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.08_1777570430144.jpeg";
+import purplePlumImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.09_1777570430144.jpeg";
+import limeImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.11_1777570430144.jpeg";
+import peppersImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.12_(1)_1777570430144.jpeg";
+import pineappleImg from "@assets/WhatsApp_Image_2026-04-27_at_09.20.12_1777570430145.jpeg";
 
-const WHATSAPP_URL = "https://wa.me/27693193534?text=Hi%20CityFresh%2C%20I%27d%20like%20to%20order%20some%20fresh%20fruit!";
+const WHATSAPP_URL = "https://wa.me/27693193534?text=Hi%20CityFresh%2C%20I%27d%20like%20to%20order%20some%20fresh%20produce!";
 
 const produceCategories = [
   {
@@ -16,8 +34,10 @@ const produceCategories = [
     desc: "Enjoy the best fruit of each season, sourced at peak ripeness for maximum flavour and nutrition. Our seasonal selection changes with the harvest calendar.",
     items: [
       { img: plumImg, name: "Plums", desc: "Sweet, juicy plums perfect for snacking" },
+      { img: purplePlumImg, name: "Purple Plums", desc: "Rich, deep-purple plums with sweet, tangy flesh" },
       { img: apricotImg, name: "Apricots", desc: "Golden apricots bursting with flavour" },
       { img: grapesImg, name: "Grapes", desc: "Crisp table grapes in red and green varieties" },
+      { img: pearImg, name: "Pears", desc: "Sweet, juicy pears with a crisp, refreshing bite" },
     ]
   },
   {
@@ -30,8 +50,42 @@ const produceCategories = [
     ]
   },
   {
+    title: "Citrus",
+    desc: "Sun-ripened citrus fruits packed with vitamin C — perfect for juicing, cooking, and fresh snacking.",
+    items: [
+      { img: orangesImg, name: "Oranges", desc: "Sweet, juicy oranges full of natural vitamin C" },
+      { img: naartjieImg, name: "Naartjies", desc: "Easy-peel naartjies — a South African favourite" },
+      { img: lemonImg, name: "Lemons", desc: "Bright, zesty lemons for cooking and drinks" },
+      { img: limeImg, name: "Limes", desc: "Fresh, fragrant limes for cocktails and cuisine" },
+    ]
+  },
+  {
+    title: "Tropical Fruits",
+    desc: "A taste of the tropics — vibrant, sweet, and refreshing fruits handpicked for quality.",
+    items: [
+      { img: pineappleImg, name: "Pineapple", desc: "Sweet, golden pineapples bursting with tropical flavour" },
+      { img: mangoImg, name: "Mango", desc: "Lush, juicy mangoes — ripe and ready to enjoy" },
+      { img: watermelonImg, name: "Watermelon", desc: "Crisp, refreshing watermelons perfect for hot days" },
+      { img: guavaImg, name: "Guava", desc: "Fragrant pink guavas with a sweet, tropical aroma" },
+    ]
+  },
+  {
+    title: "Fresh Vegetables",
+    desc: "Farm-fresh vegetables delivered alongside your fruit order — quality produce for every meal.",
+    items: [
+      { img: avocadoImg, name: "Avocados", desc: "Creamy, ripe avocados perfect for salads and toast" },
+      { img: peppersImg, name: "Bell Peppers", desc: "Crisp, colourful peppers in red, yellow, green and orange" },
+      { img: redChilliImg, name: "Red Chillies", desc: "Hot, fiery red chillies to spice up any dish" },
+      { img: greenChilliImg, name: "Green Chillies", desc: "Fresh green chillies with a bright, sharp heat" },
+      { img: cabbageImg, name: "Cabbage", desc: "Crunchy, fresh cabbage heads — great for slaws and stews" },
+      { img: beetrootImg, name: "Beetroot", desc: "Earthy, vibrant beetroot with leafy tops" },
+      { img: sweetPotatoImg, name: "Sweet Potatoes", desc: "Sweet, hearty potatoes ideal for roasting and baking" },
+      { img: okraImg, name: "Okra", desc: "Tender, fresh okra perfect for curries and stir-fries" },
+    ]
+  },
+  {
     title: "Bulk Supply",
-    desc: "For restaurants, caterers, offices and events. We supply quality fruit in bulk at competitive prices with reliable delivery.",
+    desc: "For restaurants, caterers, offices and events. We supply quality fruit and vegetables in bulk at competitive prices with reliable delivery.",
     items: [
       { img: fruitBoxImg, name: "Mixed Fruit Boxes", desc: "Curated boxes with a variety of seasonal fruit" },
     ]
@@ -51,7 +105,7 @@ export default function Produce() {
           <div className="max-w-3xl mx-auto text-center">
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-6" data-testid="text-produce-title">Our Fresh Produce</h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              From seasonal favourites to everyday essentials, CityFresh delivers the freshest fruit to your door in Somerset West and Cape Town.
+              From seasonal favourites to everyday essentials, CityFresh delivers the freshest fruit and vegetables to your door in Somerset West and Cape Town.
             </p>
           </div>
         </div>

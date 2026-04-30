@@ -21,7 +21,7 @@ client/src/
 ├── pages/
 │   ├── Home.tsx         # Landing page with hero, features, produce preview
 │   ├── About.tsx        # Company overview and values
-│   ├── Produce.tsx      # Fruit categories and products
+│   ├── Produce.tsx      # Fruit & vegetable categories and products
 │   ├── DeliveryAreas.tsx # Delivery zones with map
 │   ├── HowItWorks.tsx   # 3-step ordering process + FAQ
 │   ├── Contact.tsx      # Contact form + info cards
