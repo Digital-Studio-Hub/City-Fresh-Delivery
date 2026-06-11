@@ -38,6 +38,3 @@ dev.db
 
 # CI/CD
 .github
-
-# Attached assets
-attached_assets
