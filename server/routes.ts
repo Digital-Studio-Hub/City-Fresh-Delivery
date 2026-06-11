@@ -1,27 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { log } from "./index";
-
-async function sendZeptoEmail(token: string, to: { address: string; name: string }, subject: string, htmlbody: string) {
-  const response = await fetch("https://api.zeptomail.com/v1.1/email", {
-    method: "POST",
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-      "Authorization": token,
-    },
-    body: JSON.stringify({
-      from: {
-        address: "noreply@cityfresh.co.za",
-        name: "CityFresh"
-      },
-      to: [{ email_address: to }],
-      subject,
-      htmlbody,
-    }),
-  });
-  return response;
-}
+import { sendEmail } from "./email";
 
 export async function registerRoutes(
   httpServer: Server,
@@ -34,12 +14,6 @@ export async function registerRoutes(
 
       if (!name || !phone || !message) {
         return res.status(400).json({ message: "Name, phone and message are required" });
-      }
-
-      const token = process.env.ZEPTOMAIL_TOKEN;
-      if (!token) {
-        log("ZEPTOMAIL_TOKEN not configured", "mail");
-        return res.status(500).json({ message: "Email service not configured" });
       }
 
       const adminEmailBody = `
@@ -65,16 +39,14 @@ export async function registerRoutes(
         </div>
       `;
 
-      const adminResponse = await sendZeptoEmail(
-        token,
-        { address: "info@cityfresh.co.za", name: "CityFresh" },
+      const adminEmailSent = await sendEmail(
+        "info@cityfresh.co.za",
         `New Enquiry from ${name} - CityFresh Website`,
         adminEmailBody
       );
 
-      if (!adminResponse.ok) {
-        const result = await adminResponse.json();
-        log(`ZeptoMail admin error: ${JSON.stringify(result)}`, "mail");
+      if (!adminEmailSent) {
+        log(`Failed to send admin email for contact: ${name}`, "mail");
         return res.status(500).json({ message: "Failed to send email" });
       }
 
@@ -106,17 +78,15 @@ export async function registerRoutes(
         `;
 
         try {
-          const userResponse = await sendZeptoEmail(
-            token,
-            { address: email.trim(), name: name },
+          const userEmailSent = await sendEmail(
+            email.trim(),
             "Thank you for contacting CityFresh!",
             userEmailBody
           );
-          if (userResponse.ok) {
+          if (userEmailSent) {
             log(`User confirmation email sent to: ${email}`, "mail");
           } else {
-            const result = await userResponse.json();
-            log(`User email failed (non-critical): ${JSON.stringify(result)}`, "mail");
+            log(`User email failed (non-critical): Could not send to ${email}`, "mail");
           }
         } catch (userErr: any) {
           log(`User email error (non-critical): ${userErr.message}`, "mail");
