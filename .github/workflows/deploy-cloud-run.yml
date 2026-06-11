@@ -8,8 +8,6 @@ on:
   workflow_dispatch:
 
 env:
-  PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
-  GAR_LOCATION: ${{ secrets.GCP_REGION }}
   SERVICE_NAME: city-fresh-delivery
   REGISTRY: gcr.io
 
@@ -26,16 +24,65 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
+        id: gcp-config
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          PROJECT_ID="${{ secrets.GCP_PROJECT_ID || vars.GCP_PROJECT_ID }}"
+          GAR_LOCATION="${{ secrets.GCP_REGION || vars.GCP_REGION }}"
+          SERVICE_ACCOUNT_KEY="${{ secrets.GCP_SA_KEY }}"
+
+          if [[ -z "${SERVICE_ACCOUNT_KEY}" ]]; then
+            echo "Missing required secret: GCP_SA_KEY"
+            exit 1
+          fi
+
+          CREDENTIALS_JSON="${SERVICE_ACCOUNT_KEY}"
+          if ! echo "${CREDENTIALS_JSON}" | jq -e . >/dev/null 2>&1; then
+            CREDENTIALS_JSON="$(echo "${SERVICE_ACCOUNT_KEY}" | base64 --decode)"
+          fi
+
+          if [[ -z "${PROJECT_ID}" ]]; then
+            PROJECT_ID="$(echo "${CREDENTIALS_JSON}" | jq -r '.project_id // empty')"
+          fi
+
+          if [[ -z "${PROJECT_ID}" ]]; then
+            echo "Missing required GCP project id. Set GCP_PROJECT_ID secret/variable or include project_id in GCP_SA_KEY."
+            exit 1
+          fi
+
+          if [[ -z "${GAR_LOCATION}" ]]; then
+            echo "Missing required region. Set GCP_REGION secret or variable."
+            exit 1
+          fi
+
+          {
+            echo "PROJECT_ID=${PROJECT_ID}"
+            echo "GAR_LOCATION=${GAR_LOCATION}"
+          } >> "${GITHUB_ENV}"
+
+          {
+            echo "project_id=${PROJECT_ID}"
+            echo "credentials_json<<EOF"
+            echo "${CREDENTIALS_JSON}"
+            echo "EOF"
+          } >> "${GITHUB_OUTPUT}"
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
-          cleanup_credentials: false
+          project_id: ${{ steps.gcp-config.outputs.project_id }}
+          credentials_json: ${{ steps.gcp-config.outputs.credentials_json }}
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ steps.gcp-config.outputs.project_id }}
 
       - name: Configure Docker authentication
         run: |
-          gcloud auth configure-docker ${{ env.REGISTRY }}
+          gcloud auth configure-docker ${{ env.REGISTRY }} --quiet
 
       - name: Build Docker image
         run: |
@@ -54,7 +101,7 @@ jobs:
           gcloud run deploy ${{ env.SERVICE_NAME }} \
             --image "${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }}" \
             --platform managed \
-            --region ${{ secrets.GCP_REGION }} \
+            --region ${{ env.GAR_LOCATION }} \
             --allow-unauthenticated \
             --port 8080 \
             --memory 512Mi \
@@ -67,7 +114,7 @@ jobs:
         run: |
           URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} \
             --platform managed \
-            --region ${{ secrets.GCP_REGION }} \
+            --region ${{ env.GAR_LOCATION }} \
             --format 'value(status.url)')
           echo "Service deployed to: $URL"
           echo "DEPLOYMENT_URL=$URL" >> $GITHUB_OUTPUT
@@ -78,4 +125,4 @@ jobs:
           echo "✅ Deployment successful!"
           echo "Service: ${{ env.SERVICE_NAME }}"
           echo "Image: ${{ env.REGISTRY }}/${{ env.PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }}"
-          echo "Region: ${{ secrets.GCP_REGION }}"
+          echo "Region: ${{ env.GAR_LOCATION }}"
