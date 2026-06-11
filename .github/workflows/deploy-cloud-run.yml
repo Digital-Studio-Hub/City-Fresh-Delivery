@@ -18,67 +18,40 @@ jobs:
     permissions:
       contents: read
       id-token: write
+    env:
+      PROJECT_ID: ${{ secrets.GCP_PROJECT_ID || vars.GCP_PROJECT_ID }}
+      GAR_LOCATION: ${{ secrets.GCP_REGION || vars.GCP_REGION }}
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Cloud SDK
-        id: gcp-config
+      - name: Validate required secrets
         shell: bash
         run: |
           set -euo pipefail
-
-          PROJECT_ID="${{ secrets.GCP_PROJECT_ID || vars.GCP_PROJECT_ID }}"
-          GAR_LOCATION="${{ secrets.GCP_REGION || vars.GCP_REGION }}"
-          SERVICE_ACCOUNT_KEY="${{ secrets.GCP_SA_KEY }}"
-
-          if [[ -z "${SERVICE_ACCOUNT_KEY}" ]]; then
-            echo "Missing required secret: GCP_SA_KEY"
+          missing=()
+          [[ -z "${{ secrets.GCP_SA_KEY }}" ]] && missing+=("GCP_SA_KEY")
+          [[ -z "${PROJECT_ID}" ]] && missing+=("GCP_PROJECT_ID (secret or variable)")
+          [[ -z "${GAR_LOCATION}" ]] && missing+=("GCP_REGION (secret or variable)")
+          if [[ ${#missing[@]} -gt 0 ]]; then
+            echo "Missing required secrets/variables:"
+            printf '  - %s\n' "${missing[@]}"
+            echo ""
+            echo "Set them in your repository under Settings > Secrets and variables > Actions."
             exit 1
           fi
-
-          CREDENTIALS_JSON="${SERVICE_ACCOUNT_KEY}"
-          if ! echo "${CREDENTIALS_JSON}" | jq -e . >/dev/null 2>&1; then
-            CREDENTIALS_JSON="$(echo "${SERVICE_ACCOUNT_KEY}" | base64 --decode)"
-          fi
-
-          if [[ -z "${PROJECT_ID}" ]]; then
-            PROJECT_ID="$(echo "${CREDENTIALS_JSON}" | jq -r '.project_id // empty')"
-          fi
-
-          if [[ -z "${PROJECT_ID}" ]]; then
-            echo "Missing required GCP project id. Set GCP_PROJECT_ID secret/variable or include project_id in GCP_SA_KEY."
-            exit 1
-          fi
-
-          if [[ -z "${GAR_LOCATION}" ]]; then
-            echo "Missing required region. Set GCP_REGION secret or variable."
-            exit 1
-          fi
-
-          {
-            echo "PROJECT_ID=${PROJECT_ID}"
-            echo "GAR_LOCATION=${GAR_LOCATION}"
-          } >> "${GITHUB_ENV}"
-
-          {
-            echo "project_id=${PROJECT_ID}"
-            echo "credentials_json<<EOF"
-            echo "${CREDENTIALS_JSON}"
-            echo "EOF"
-          } >> "${GITHUB_OUTPUT}"
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          project_id: ${{ steps.gcp-config.outputs.project_id }}
-          credentials_json: ${{ steps.gcp-config.outputs.credentials_json }}
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ env.PROJECT_ID }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
-          project_id: ${{ steps.gcp-config.outputs.project_id }}
+          project_id: ${{ env.PROJECT_ID }}
 
       - name: Configure Docker authentication
         run: |
@@ -111,6 +84,7 @@ jobs:
             --set-secrets INBOUND_API_KEY=INBOUND_API_KEY:latest
 
       - name: Get Cloud Run URL
+        id: deploy-output
         run: |
           URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} \
             --platform managed \
@@ -118,7 +92,6 @@ jobs:
             --format 'value(status.url)')
           echo "Service deployed to: $URL"
           echo "DEPLOYMENT_URL=$URL" >> $GITHUB_OUTPUT
-        id: deploy-output
 
       - name: Post deployment summary
         run: |
