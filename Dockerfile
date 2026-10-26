@@ -19,8 +19,13 @@ ENV DATABASE_URL="postgresql://mock:mock@localhost:5432/mock"
 RUN npm run build
 
 # Stage 3: Production runtime
+# Base is already node:22-alpine (same variant as a node:20-alpine bump would use).
+# ca-certificates is not installed in that image, so `apk upgrade` alone is a no-op.
+# Install it, then upgrade (Alpine form of the Debian ca-certificates install).
 FROM node:22-alpine AS runner
 WORKDIR /app
+RUN apk add --no-cache ca-certificates \
+    && apk upgrade --no-cache ca-certificates
 ENV NODE_ENV=production
 # Fallback mock DATABASE_URL to avoid crashes if drizzle is imported on startup
 ENV DATABASE_URL="postgresql://mock:mock@localhost:5432/mock"

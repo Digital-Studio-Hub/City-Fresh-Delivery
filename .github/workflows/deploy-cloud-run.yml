@@ -27,13 +27,31 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Validate required secrets
+        id: gcp-auth
         shell: bash
+        env:
+          WIF_PROVIDER: ${{ secrets.WIF_PROVIDER }}
+          WIF_SERVICE_ACCOUNT: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
         run: |
           set -euo pipefail
           missing=()
-          [[ -z "${{ secrets.GCP_SA_KEY }}" ]] && missing+=("GCP_SA_KEY")
           [[ -z "${PROJECT_ID}" ]] && missing+=("GCP_PROJECT_ID (secret or variable)")
           [[ -z "${GAR_LOCATION}" ]] && missing+=("GCP_REGION (secret or variable)")
+
+          # Prefer Workload Identity Federation when WIF_PROVIDER is set.
+          # Otherwise keep the existing GCP_SA_KEY path so this is safe to merge
+          # before the pool exists. Do not remove GCP_SA_KEY until WIF deploys succeed.
+          if [[ -n "${WIF_PROVIDER}" ]]; then
+            [[ -z "${WIF_SERVICE_ACCOUNT}" ]] && missing+=("WIF_SERVICE_ACCOUNT")
+            echo "mode=wif" >> "$GITHUB_OUTPUT"
+            echo "Using Workload Identity Federation."
+          else
+            [[ -z "${GCP_SA_KEY}" ]] && missing+=("GCP_SA_KEY")
+            echo "mode=key" >> "$GITHUB_OUTPUT"
+            echo "WIF_PROVIDER is unset; falling back to GCP_SA_KEY."
+          fi
+
           if [[ ${#missing[@]} -gt 0 ]]; then
             echo "Missing required secrets/variables:"
             printf '  - %s\n' "${missing[@]}"
@@ -42,7 +60,16 @@ jobs:
             exit 1
           fi
 
-      - name: Authenticate to Google Cloud
+      - name: Authenticate to Google Cloud (Workload Identity Federation)
+        if: steps.gcp-auth.outputs.mode == 'wif'
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+          project_id: ${{ env.PROJECT_ID }}
+
+      - name: Authenticate to Google Cloud (service account key)
+        if: steps.gcp-auth.outputs.mode == 'key'
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
